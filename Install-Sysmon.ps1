@@ -138,3 +138,76 @@ function Install-Sysmon {
     End {
         }
     }
+
+function Remove-Sysmon {
+<#
+.Synopsis
+   Remove Sysmon and Winlogbeat remotely
+
+.Example 
+   Invoke-Command -ComputerName COMPUTERNAME -Credential DOMAIN/user -ScriptBlock { powershell "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/apihlak/Sysmon/master/Install-Sysmon.ps1');Remove-Sysmon" }
+
+#>
+    [CmdletBinding()]
+    Param (
+       [Parameter(Mandatory=$false,       
+               Position=0,       
+               HelpMessage="Sysmon data path.")]     
+       [Alias("PS")]     
+       [ValidateNotNullOrEmpty()]        
+       [string[]]        
+       $Path_sysmon = "$env:SystemDrive\ProgramData\sysmon",     
+     
+       [Parameter(Mandatory=$false,      
+               Position=1,       
+               HelpMessage="Winlogbeat data path.")]     
+       [Alias("PW")]     
+       [ValidateNotNullOrEmpty()]        
+       [string[]]        
+       $Path_winlog = "$env:SystemDrive\ProgramData\winlogbeat",     
+     
+    )
+
+    Begin {
+    }
+    Process {
+    
+        #Remove sysmon
+
+            Invoke-Command -ScriptBlock {
+                sc.exe sdset Sysmon 'D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
+            }        
+
+            Set-Location -Path "$Path_sysmon"
+
+            if (Get-Service sysmon -ErrorAction SilentlyContinue) {
+              if ( ((Get-WmiObject Win32_OperatingSystem).OSArchitecture) -eq "64-bit") {
+                  & .\sysmon64.exe -u
+              }
+              else {
+                  & .\sysmon.exe -u
+              }
+            }
+
+            Set-Location -Path "C:\ProgramData"
+            Remove-Item -Recurse -Force $Path_sysmon
+
+        #Remove winlogbeat
+            
+            Invoke-Command -ScriptBlock {
+                sc.exe sdset winlogbeat 'D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
+            }
+
+            if (Get-Service winlogbeat -ErrorAction SilentlyContinue) {
+              $service = Get-WmiObject -Class Win32_Service -Filter "name='winlogbeat'"
+                $service.StopService()
+                Start-Sleep -Seconds 1
+                $service.delete()
+            }
+
+            Remove-Item -Recurse -Force $Path_winlog  
+
+      }
+    End {
+        }
+    }
