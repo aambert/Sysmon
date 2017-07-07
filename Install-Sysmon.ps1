@@ -164,8 +164,7 @@ function Remove-Sysmon {
        [Alias("PW")]     
        [ValidateNotNullOrEmpty()]        
        [string[]]        
-       $Path_winlog = "$env:SystemDrive\ProgramData\winlogbeat",     
-     
+       $Path_winlog = "$env:SystemDrive\ProgramData\winlogbeat"
     )
 
     Begin {
