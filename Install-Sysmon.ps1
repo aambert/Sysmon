@@ -123,16 +123,16 @@ function Install-Sysmon {
                 $service.delete()
             }
 
-          New-Service -Name winlogbeat -DisplayName winlogbeat -BinaryPathName "`"$Path_winlog\\winlogbeat.exe`" -c `"$Path_winlog\\winlogbeat.yml`" -path.home `"$Path_winlog`" -path.data `"C:\\ProgramData\\winlogbeat`""
+            New-Service -Name winlogbeat -DisplayName winlogbeat -BinaryPathName "`"$Path_winlog\\winlogbeat.exe`" -c `"$Path_winlog\\winlogbeat.yml`" -path.home `"$Path_winlog`" -path.data `"C:\\ProgramData\\winlogbeat`""
             Get-Service -Name winlogbeat | Start-Service
 
             Invoke-Command -ScriptBlock {
                 sc.exe failure winlogbeat actions= restart/10000/restart/10000// reset= 120
             }
 
-            $sddlset =  Invoke-Command -ScriptBlock {
+            Invoke-Command -ScriptBlock {
                 sc.exe sdset winlogbeat 'D:(D;;DCLCWPDTSD;;;IU)(D;;DCLCWPDTSD;;;SU)(D;;DCLCWPDTSD;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
-        }
+            }
 
       }
     End {
