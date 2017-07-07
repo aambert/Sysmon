@@ -110,10 +110,10 @@ function Install-Sysmon {
             (New-Object System.Net.WebClient).DownloadFile("$Config_winlog","$Path_winlog\winlogbeat.yml")
 
             if ( ((Get-WmiObject Win32_OperatingSystem).OSArchitecture) -eq "64-bit") {
-                (New-Object System.Net.WebClient).DownloadFile("$ExeDownload64_winlog","$Path_sysmon\winlogbeat.exe")
+                (New-Object System.Net.WebClient).DownloadFile("$ExeDownload64_winlog","$Path_winlog\winlogbeat.exe")
             }
             else {
-                (New-Object System.Net.WebClient).DownloadFile("$ExeDownload64_winlog","$Path_sysmon\winlogbeat.exe")
+                (New-Object System.Net.WebClient).DownloadFile("$ExeDownload64_winlog","$Path_winlog\winlogbeat.exe")
             }
 
             if (Get-Service winlogbeat -ErrorAction SilentlyContinue) {
