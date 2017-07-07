@@ -98,7 +98,7 @@ function Install-Sysmon {
                 sc.exe failure Sysmon actions= restart/10000/restart/10000// reset= 120
             }
 
-            $sddlset =  Invoke-Command -ScriptBlock {
+            Invoke-Command -ScriptBlock {
                 sc.exe sdset Sysmon 'D:(D;;DCLCWPDTSD;;;IU)(D;;DCLCWPDTSD;;;SU)(D;;DCLCWPDTSD;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
             }
 
