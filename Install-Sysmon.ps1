@@ -5,6 +5,7 @@ function Install-Sysmon {
 
 .Example 
    Invoke-Command -ComputerName COMPUTERNAME -Credential DOMAIN/user -ScriptBlock { powershell "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/apihlak/Sysmon/master/Install-Sysmon.ps1');Install-Sysmon" }
+
 #>
     [CmdletBinding()]
     [Alias()]
