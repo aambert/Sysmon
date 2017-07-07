@@ -4,7 +4,7 @@ function Install-Sysmon {
    Install Sysmon and Winlogbeat remotely
 
 .Example 
-   Invoke-Command -ComputerName COMPUTERNAME -Credential DOMAIN/user -ScriptBlock { powershell "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/apihlak/Sysmon/master/Install-Sysmon.ps1');Install-Sysmon" }
+   Invoke-Command -ComputerName COMPUTERNAME -ScriptBlock { powershell "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/apihlak/Sysmon/master/Install-Sysmon.ps1');Install-Sysmon" }
 
 #>
     [CmdletBinding()]
@@ -145,7 +145,7 @@ function Remove-Sysmon {
    Remove Sysmon and Winlogbeat remotely
 
 .Example 
-   Invoke-Command -ComputerName COMPUTERNAME -Credential DOMAIN/user -ScriptBlock { powershell "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/apihlak/Sysmon/master/Install-Sysmon.ps1');Remove-Sysmon" }
+   Invoke-Command -ComputerName COMPUTERNAME -ScriptBlock { powershell "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/apihlak/Sysmon/master/Install-Sysmon.ps1');Remove-Sysmon" }
 
 #>
     [CmdletBinding()]
