@@ -10,75 +10,21 @@ function Install-Sysmon {
     [CmdletBinding()]
     [Alias()]
     Param (
-        [Parameter(Mandatory=$false,
-                Position=0,
-                HelpMessage="Sysmon download path.")]
-        [Alias("PS")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $Path_sysmon = "$env:SystemDrive\ProgramData\sysmon",
-
-        [Parameter(Mandatory=$false,
-                Position=1,
-                HelpMessage="Winlogbeat download path.")]
-        [Alias("PW")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $Path_winlog = "$env:SystemDrive\ProgramData\winlogbeat",
-
-        [Parameter(Mandatory=$false,
-                Position=2,
-                HelpMessage="Sysmon configuration download path.")]
-        [Alias("CS")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $Config_sysmon = "https://raw.githubusercontent.com/ion-storm/sysmon-config/master/sysmonconfig-export.xml",
-
-        [Parameter(Mandatory=$false,
-                Position=3,
-                HelpMessage="Winlogbeat configuration download path.")]
-        [Alias("CW")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $Config_winlog = "https://raw.githubusercontent.com/apihlak/Sysmon/master/winlogbeat.yml",
-
-        [Parameter(Mandatory=$false,
-                Position=4,
-                HelpMessage="Sysmon 64 bit download path.")]
-        [Alias("ES6")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $ExeDownload64_sysmon = "https://live.sysinternals.com/Sysmon64.exe",
-
-        [Parameter(Mandatory=$false,
-                Position=5,
-                HelpMessage="Winlogbeat 64 bit download path.")]
-        [Alias("EW6")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $ExeDownload64_winlog= "https://github.com/apihlak/Sysmon/raw/master/winlogbeat64.exe",
-
-        [Parameter(Mandatory=$false,
-                Position=6,
-                HelpMessage="Sysmon 32 bit download path.")]
-        [Alias("ES3")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $ExeDownload32_sysmon= "https://live.sysinternals.com/Sysmon.exe",
-
-        [Parameter(Mandatory=$false,
-                Position=7,
-                HelpMessage="Winlogbeat 32 bit download path.")]
-        [Alias("EW3")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]
-        $ExeDownload32_winlog= "https://github.com/apihlak/Sysmon/raw/master/winlogbeat.exe"
-
     )
 
     Begin {
     }
     Process {
+
+            $Path_sysmon = "$env:SystemDrive\ProgramData\sysmon"
+            $Config_sysmon = "https://raw.githubusercontent.com/ion-storm/sysmon-config/master/sysmonconfig-export.xml"
+            $ExeDownload64_sysmon = "https://live.sysinternals.com/Sysmon64.exe"
+            $ExeDownload32_sysmon = "https://live.sysinternals.com/Sysmon.exe"
+
+            $Path_winlog = "$env:SystemDrive\ProgramData\winlogbeat"                   
+            $Config_winlog = "https://raw.githubusercontent.com/apihlak/Sysmon/master/winlogbeat.yml"
+            $ExeDownload64_winlog = "https://github.com/apihlak/Sysmon/raw/master/winlogbeat64.exe"
+            $ExeDownload32_winlog = "https://github.com/apihlak/Sysmon/raw/master/winlogbeat.exe"
 
         #Install sysmon and hide service
 
