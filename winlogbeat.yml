@@ -17,7 +17,7 @@ winlogbeat.event_logs:
 
 output.logstash:
   enabled: true
-  hosts: ["10.30.50.71:20000", "62.128.118.71:20000"]
+  hosts: ["elk.linxtelecom.com:20000"]
   type: "wineventlog"
 
 logging.level: warning
