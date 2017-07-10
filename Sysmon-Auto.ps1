@@ -1,5 +1,5 @@
 $Path_sysmon = "$env:SystemDrive\ProgramData\sysmon"
-$Config_sysmon = "https://raw.githubusercontent.com/ion-storm/sysmon-config/master/sysmonconfig-export.xml"
+$Config_sysmon = "\\linx\it\deploy\ALL\sysmon\sysmonconfig-export.xml"
 $ExeDownload64_sysmon = "\\linx\it\deploy\ALL\sysmon\sysmon64.exe"
 $ExeDownload32_sysmon = "\\linx\it\deploy\ALL\sysmon\sysmon.exe"
 
@@ -8,13 +8,15 @@ $Config_winlog = "\\linx\it\deploy\ALL\winlogbeat\winlogbeat.yml"
 $ExeDownload64_winlog = "\\linx\it\deploy\ALL\winlogbeat\winlogbeat64.exe"
 $ExeDownload32_winlog = "\\linx\it\deploy\ALL\winlogbeat\winlogbeat.exe"
 
+If (!(Test-Path C:\ProgramData)) { New-Item -Path C:\ProgramData -ItemType Directory }
+
 #Install sysmon and hide service
 if (-not (Test-Path $Path_sysmon)) {
     
     New-Item -Path $Path_sysmon -ItemType Directory
     Set-Location -Path "$Path_sysmon"
 
-    (New-Object System.Net.WebClient).DownloadFile("$Config_sysmon","$Path_sysmon\sysmonconfig-export.xml")
+    Copy-Item -Path "$Config_sysmon" -Destination "$Path_sysmon\sysmonconfig-export.xml" -Force
 
     if ( ((Get-WmiObject Win32_OperatingSystem).OSArchitecture) -eq "64-bit") {
         Copy-Item -Path "$ExeDownload64_sysmon" -Destination "$Path_sysmon\sysmon64.exe" -Force
