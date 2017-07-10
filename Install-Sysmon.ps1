@@ -78,7 +78,7 @@ function Install-Sysmon {
     }
     Process {
 
-            If(Test-Path C:\ProgramData) { New-Item -Path C:\ProgramData -ItemType Directory }
+            If (!(Test-Path C:\ProgramData)) { New-Item -Path C:\ProgramData -ItemType Directory }
             
         #Install sysmon and hide service
 
