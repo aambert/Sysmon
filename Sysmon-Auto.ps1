@@ -8,11 +8,9 @@ $Config_winlog = "\\linx\it\deploy\ALL\winlogbeat\winlogbeat.yml"
 $ExeDownload64_winlog = "\\linx\it\deploy\ALL\winlogbeat\winlogbeat64.exe"
 $ExeDownload32_winlog = "\\linx\it\deploy\ALL\winlogbeat\winlogbeat.exe"
 
-If (!(Test-Path C:\ProgramData)) { New-Item -Path C:\ProgramData -ItemType Directory }
+If (-not (Test-Path C:\ProgramData)) { New-Item -Path C:\ProgramData -ItemType Directory }
 
-#Install sysmon and hide service
-if (-not (Test-Path $Path_sysmon)) {
-    
+#Install sysmon and hide service    
     New-Item -Path $Path_sysmon -ItemType Directory
     Set-Location -Path "$Path_sysmon"
 
@@ -34,10 +32,9 @@ if (-not (Test-Path $Path_sysmon)) {
     $sddlset =  Invoke-Command -ScriptBlock {
         sc.exe sdset Sysmon 'D:(D;;DCLCWPDTSD;;;IU)(D;;DCLCWPDTSD;;;SU)(D;;DCLCWPDTSD;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
     }
-}
+
 
 #Install winlogbeat and hide service
-if (-not (Test-Path $Path_winlog)) {
     
     New-Item -Path $Path_winlog -ItemType Directory
     Set-Location -Path "$Path_winlog"
@@ -68,4 +65,4 @@ if (-not (Test-Path $Path_winlog)) {
     $sddlset =  Invoke-Command -ScriptBlock {
         sc.exe sdset winlogbeat 'D:(D;;DCLCWPDTSD;;;IU)(D;;DCLCWPDTSD;;;SU)(D;;DCLCWPDTSD;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
     }
-}
+
